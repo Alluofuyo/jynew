@@ -17,7 +17,7 @@ jobs:
       - uses: actions/cache@v2
         with:
           path: Library
-          key: Library-${{ hashFiles('jy2/Assets/**', 'jy2/Packages/**', 'jy2/ProjectSettings/**') }}
+          key: Library-${{ hashFiles('jyx2/Assets/**', 'jyx2/Packages/**', 'jyx2/ProjectSettings/**') }}
           restore-keys: |
             Library-
 
@@ -30,7 +30,8 @@ jobs:
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
           targetPlatform: StandaloneWindows64
-          projectPath: jy2
+          projectPath: jyx2
+          buildMethod: Jyx2Editor.BuildTool.Jyx2BuildTool.BuildForWindows
 
       # Output
       - uses: actions/upload-artifact@v2
