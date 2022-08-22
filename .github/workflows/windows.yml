@@ -16,7 +16,7 @@ jobs:
       # Cache
       - uses: actions/cache@v2
         with:
-          path: Library
+          path: jyx2/Library
           key: Library-${{ hashFiles('jyx2/Assets/**', 'jyx2/Packages/**', 'jyx2/ProjectSettings/**') }}
           restore-keys: |
             Library-
