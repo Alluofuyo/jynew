@@ -35,6 +35,7 @@ jobs:
         with:
           targetPlatform: StandaloneWindows64
           buildMethod: Jyx2Editor.BuildTool.Jyx2BuildTool.BuildForWindows
+          projectPath: .
 
       # Output
       - uses: actions/upload-artifact@v2
