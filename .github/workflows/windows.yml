@@ -10,21 +10,20 @@ jobs:
     steps:
       # Checkout
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           lfs: true
-      - name: Change workdirectory
-        run: cd jyx2
       # Cache
-      - uses: actions/cache@v2
+      - uses: actions/cache@v3
         with:
-          path: Library
-          key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+          path: jyx2/Packages
+          key: Packages-${{ hashFiles('Packages/packages-lock.json') }}
           restore-keys: |
-            Library-
+            Packages-
 
       # Build
       - name: Build project
+        id: build
         uses: game-ci/unity-builder@v2
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
@@ -34,9 +33,18 @@ jobs:
           targetPlatform: StandaloneWindows64
           buildMethod: Jyx2Editor.BuildTool.Jyx2BuildTool.BuildForWindows
           projectPath: jyx2
-
-      # Output
-      - uses: actions/upload-artifact@v2
+          buildsPath: jyx2/build
+      
+      # Zip packages
+      - name: Zip Builds
+        uses: vimtor/action-zip@v1
+        with: 
+          files: jyx2/build
+          dest: ${steps.build.outputs.buildVersion}-jynew-windows64.zip
+          recursive: true
+          
+      # Upload
+      - uses: actions/upload-artifact@v3
         with:
           name: Build
-          path: build
+          path: ${steps.build.outputs.buildVersion}-jynew-windows64.zip
