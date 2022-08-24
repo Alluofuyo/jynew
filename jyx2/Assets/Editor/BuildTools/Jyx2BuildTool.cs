@@ -75,9 +75,12 @@ namespace Jyx2Editor.BuildTool
                     string.Format("{0} is Unknown Build Platform ! Build Failture!", buildTarget));
             }
                     
-            
+            string assetsBuildDirectory="Assets/StreamingAssets";
+            if(!Directory.Exists(Application.streamingAssetsPath)){
+                Directory.CreateDirectory(assetsBuildDirectory);
+            }
             //生成ab包
-            BuildPipeline.BuildAssetBundles("Assets/StreamingAssets", BuildAssetBundleOptions.ChunkBasedCompression, buildTarget);
+            BuildPipeline.BuildAssetBundles(assetsBuildDirectory, BuildAssetBundleOptions.ChunkBasedCompression, buildTarget);
 
             //设置参数
             SetBuildParams(buildTargetGroup);
